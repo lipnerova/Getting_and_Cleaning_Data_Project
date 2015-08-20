@@ -103,7 +103,7 @@ l<-sub("Acc", l, replacement = "_Acceleration")
 l<-sub("Gyro", l, replacement = "_AngularVelocity")
 l<-sub("Mag", l, replacement = "_Magnitude")
 
-# std, mean, X, Y, Z
+# std, mean, X, Y, Z; fixed=T needed for finding exact match
 l<-sub("-std()-X", l, replacement = "_X_std", fixed=T)
 l<-sub("-std()-Y", l, replacement = "_Y_std", fixed=T)
 l<-sub("-std()-Z", l, replacement = "_Z_std", fixed=T)
@@ -124,8 +124,7 @@ rm(l)
 ##5. From the data set in step 4, creates a second, independent tidy data set 
 ##      with the average of each variable for each activity and each subject. 
 
-a_tbl<-as.tbl(a_label)
-
+a_tbl<-as.tbl(a_label) #converting to tbl, so the dplyr functions will be useable
 a_fin<-a_tbl %>% group_by(activity, test_subject) %>% summarise_each(funs(mean))
 
 #get rid of unnecessary files
