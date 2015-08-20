@@ -1,4 +1,4 @@
-### PROJECT INFORMATION
+# PROJECT INFORMATION
 
 This is Course prokect for Getting and Cleaning Data Course on Coursera.org. The instructions given by lectors are given below. The data were obtained via the course, for detailed info about its origin and origin of variables see CodeBook.md. This file contains mainly the script with thorough comments describing what and why was done in each step.
 
@@ -17,13 +17,15 @@ You should create one R script called run_analysis.R that does the following:
 ## SCRIPT
 
 
-# 1. Merging
+### 1. Merging
 *1. Merges the training and the test sets to create one data set.*
 
 set working directory with downloaded data - data should be downloaded and extracted prior to analysis
+	
 	setwd("D:/moje/Coursera/Data Cleaning/project")
 
 load train sets and merge them together
+	
 	subject_train<-read.table("./train/subject_train.txt")
 	X_train<-read.table("./train/X_train.txt")
 	y_train<-read.table("./train/y_train.txt")
@@ -31,6 +33,7 @@ load train sets and merge them together
 	trainset<-cbind(X_train, subject_train, y_train)
 
 load test sets and merge them together
+	
 	subject_test<-read.table("./test/subject_test.txt")
 	X_test<-read.table("./test/X_test.txt")
 	y_test<-read.table("./test/y_test.txt")
@@ -38,32 +41,39 @@ load test sets and merge them together
 	testset<-cbind(X_test, subject_test, y_test)
 
 merge testset and trainset together to create working dataset called "a"
+	
 	a<-rbind(trainset, testset)
 
 name the working dataset so we know what is in each collumn
+	
 	features<-read.delim("features.txt", header=F, sep=" ", stringsAsFactors=FALSE) 
-          *thanks to stringsAsFactors=FALSE the features are as characters and not as factors*
+
+*thanks to stringsAsFactors=FALSE the features are as characters and not as factors*
+
 	names(a)<-c(features$V2, "test_subject", "activity_code")
 
 
 get rid of unnecessary files to clear memory and Global environment
+
 	rm(subject_test, subject_train, X_test, X_train, y_test, y_train, testset, trainset)
 
 
 
 
-######################## 2. Mean and std ################### 
-## 2. Extracts only the measurements on the mean and standard deviation for each measurement.
+## 2. Mean and std 
+*2. Extracts only the measurements on the mean and standard deviation for each measurement.*
 
-#I choose only the means and stds of measurements not everything with mean in name
-a_mean<-a[, grep(pattern="mean()", x=features$V2, fixed=T)]
-a_std<-a[, grep(pattern="std()", x=features$V2, fixed=T)]
-a_rest<-a[,562:563] #to save columns with activity and test subject id
+I choose only the means and stds of measurements not everything with mean in name
+	
+	a_mean<-a[, grep(pattern="mean()", x=features$V2, fixed=T)]
+	a_std<-a[, grep(pattern="std()", x=features$V2, fixed=T)]
+	a_rest<-a[,562:563] #to save columns with activity and test subject id
 
-a_extract <- cbind(a_rest, a_mean, a_std) #put all the sets together
+	a_extract <- cbind(a_rest, a_mean, a_std) #put all the sets together
 
-#get rid of unnecessary files
-rm(a, features, a_mean, a_std, a_rest)
+get rid of unnecessary files
+
+	rm(a, features, a_mean, a_std, a_rest)
 
 
 
