@@ -1,6 +1,6 @@
 # PROJECT INFORMATION
 
-This is Course prokect for Getting and Cleaning Data Course on Coursera.org. The instructions given by lectors are given below. The data were obtained via the course, for detailed info about its origin and origin of variables see CodeBook.md. This file contains mainly the script with thorough comments describing what and why was done in each step.
+This is Course project for Getting and Cleaning Data Course on Coursera.org. The instructions given by lectors are given below. The data were obtained via the course, for detailed info about its origin and origin of variables see CodeBook.md. This file contains mainly the script with thorough comments describing what and why was done in each step.
 
 ## INSTRUCTIONS 
 
