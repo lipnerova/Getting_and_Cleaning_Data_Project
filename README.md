@@ -48,7 +48,7 @@ name the working dataset so we know what is in each collumn
 	
 	features<-read.delim("features.txt", header=F, sep=" ", stringsAsFactors=FALSE) 
 
-*thanks to stringsAsFactors=FALSE the features are as characters and not as factors*
+thanks to stringsAsFactors=FALSE the features are as characters and not as factors
 
 	names(a)<-c(features$V2, "test_subject", "activity_code")
 
@@ -60,7 +60,7 @@ get rid of unnecessary files to clear memory and Global environment
 
 
 
-## 2. Mean and std 
+### 2. Mean and std 
 *2. Extracts only the measurements on the mean and standard deviation for each measurement.*
 
 I choose only the means and stds of measurements not everything with mean in name
@@ -79,70 +79,79 @@ get rid of unnecessary files
 
 
 
-######################## 3. Activities ################### 
-##3. Uses descriptive activity names to name the activities in the data set
+### 3. Activities
+*3. Uses descriptive activity names to name the activities in the data set*
 
-activity_labels<-read.table("activity_labels.txt", header=F) 
-a_label<-merge(a_extract, activity_labels, by.y= "V1", by.x="activity_code")
+	activity_labels<-read.table("activity_labels.txt", header=F) 
+	a_label<-merge(a_extract, activity_labels, by.y= "V1", by.x="activity_code")
 
-library(dplyr) #it is easier to use dplyr package then try to rename column without it
-a_label<-rename(a_label, activity=V2)
+it is easier to use dplyr package then try to rename column without it
 
-#get rid of unnecessary files
-a_label<-a_label[,-1] #no need for "activity_code" anymore,
-rm(a_extract, activity_labels)
+	library(dplyr)
+	a_label<-rename(a_label, activity=V2)
 
+get rid of unnecessary files
 
+	rm(a_extract, activity_labels)
 
+no need for "activity_code" anymore
 
-######################## 4. Labeling ################### 
-##4. Appropriately labels the data set with descriptive variable names.
-
-# My changes are based on post by ly in 
-#https://class.coursera.org/getdata-031/forum/thread?thread_id=185#comment-780
-#as I find his solution being quite comprehensive and readable.
-
-l<-names(a_label)
-l<-sub("BodyBody", l, replacement = "Body") #remove typo
-
-#t -> time & f -> freq
-l<-sub("tBody", l, replacement = "timeBody")
-l<-sub("tGr", l, replacement = "timeGr")
-l<-sub("fBody", l, replacement = "freqBody")
-
-#Acc -> Linear & Gyro -> AngularVelocity & Mag -> Magnitude
-l<-sub("Acc", l, replacement = "_Acceleration")
-l<-sub("Gyro", l, replacement = "_AngularVelocity")
-l<-sub("Mag", l, replacement = "_Magnitude")
-
-# std, mean, X, Y, Z
-l<-sub("-std()-X", l, replacement = "_X_std", fixed=T)
-l<-sub("-std()-Y", l, replacement = "_Y_std", fixed=T)
-l<-sub("-std()-Z", l, replacement = "_Z_std", fixed=T)
-l<-sub("-mean()-X", l, replacement = "_X_mean", fixed=T)
-l<-sub("-mean()-Y", l, replacement = "_Y_mean", fixed=T)
-l<-sub("-mean()-Z", l, replacement = "_Z_mean", fixed=T)
-l<-sub("-mean()", l, replacement = "_mean", fixed=T)
-l<-sub("-std()", l, replacement = "_std", fixed=T)
-
-names(a_label)<-l
-
-#get rid of unnecessary files
-rm(l)
+	a_label<-a_label[,-1] 
+	
 
 
 
-######################## 5. Tidy dataset ################### 
-##5. From the data set in step 4, creates a second, independent tidy data set 
-##      with the average of each variable for each activity and each subject. 
 
-a_tbl<-as.tbl(a_label)
+### 4. Labeling
+*4. Appropriately labels the data set with descriptive variable names.*
 
-a_fin<-a_tbl %>% group_by(activity, test_subject) %>% summarise_each(funs(mean))
+My changes are based on [post by ly on course discussion forum](https://class.coursera.org/getdata-031/forum/thread?thread_id=185#comment-780) as I find his solution being quite comprehensive and readable.
 
-#get rid of unnecessary files
-rm(a_label, a_tbl)
+	l<-names(a_label)
+	l<-sub("BodyBody", l, replacement = "Body") #remove typo
+
+t -> time & f -> freq
+
+	l<-sub("tBody", l, replacement = "timeBody")
+	l<-sub("tGr", l, replacement = "timeGr")
+	l<-sub("fBody", l, replacement = "freqBody")
+
+Acc -> Linear & Gyro -> AngularVelocity & Mag -> Magnitude
+
+	l<-sub("Acc", l, replacement = "_Acceleration")
+	l<-sub("Gyro", l, replacement = "_AngularVelocity")
+	l<-sub("Mag", l, replacement = "_Magnitude")
+
+std, mean, X, Y, Z
+
+	l<-sub("-std()-X", l, replacement = "_X_std", fixed=T)
+	l<-sub("-std()-Y", l, replacement = "_Y_std", fixed=T)
+	l<-sub("-std()-Z", l, replacement = "_Z_std", fixed=T)
+	l<-sub("-mean()-X", l, replacement = "_X_mean", fixed=T)
+	l<-sub("-mean()-Y", l, replacement = "_Y_mean", fixed=T)
+	l<-sub("-mean()-Z", l, replacement = "_Z_mean", fixed=T)
+	l<-sub("-mean()", l, replacement = "_mean", fixed=T)
+	l<-sub("-std()", l, replacement = "_std", fixed=T)
+
+	names(a_label)<-l
+
+get rid of unnecessary files
+
+	rm(l)
 
 
-## Optional: Export the tidy dataset from R
-write.table(a_fin, "tidy_dataset.txt", row.name=F)
+
+### 5. Tidy dataset
+*5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.* 
+
+	a_tbl<-as.tbl(a_label)
+	a_fin<-a_tbl %>% group_by(activity, test_subject) %>% summarise_each(funs(mean))
+
+get rid of unnecessary files
+
+	rm(a_label, a_tbl)
+
+
+optional: export the tidy dataset from R
+
+	write.table(a_fin, "tidy_dataset.txt", row.name=F)
