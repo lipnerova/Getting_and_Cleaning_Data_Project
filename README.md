@@ -21,6 +21,7 @@ You should create one R script called run_analysis.R that does the following:
 *1. Merges the training and the test sets to create one data set.*
 
 set working directory with downloaded data - data should be downloaded and extracted prior to analysis
+(https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip)
 	
 	setwd("D:/moje/Coursera/Data Cleaning/project")
 
