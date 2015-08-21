@@ -1,8 +1,10 @@
 ##General info
 Data and information obtained via Coursera Getting and Cleaning Data Course. Below are the original comments together with appropriate citation of the source. From the original dataset I choosed just some of the variables and changed their names. In the text below the names of variables are changed so they correspond with the final tidy dataset and omitted variables are omitted form the text too.
 
+Data used in project:
+https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
---
+------
 Human Activity Recognition Using Smartphones Dataset
 Version 1.0
 --
