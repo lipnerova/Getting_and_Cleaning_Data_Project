@@ -29,6 +29,8 @@ You should create one R script called run_analysis.R that does the following:
       of each variable for each activity and each subject. #summarise_each(oldDF(funs(mean))
 
 
+
+
 ## Walkthrough script
 
 Each part corresponds to one of the instruction orders, that are given below each section headline. Then the script with comments continues.
@@ -109,15 +111,15 @@ Merge creates new variable in a_label, called V2, where activity names are fille
 	library(dplyr)
 	a_label<-rename(a_label, activity=V2)
 
+There is no need for "activity_code" collumn in a_label anymore, so get rid of it in this quest for tidy data.
+
+	a_label<-a_label[,-1]
+
 Again at the end of the part I get rid of already unnecessary files.
 
 	rm(a_extract, activity_labels)
 
-Also there is no need for "activity_code" collumn in a_label anymore, so get rid of it in this quest for tidy data.
-
-	a_label<-a_label[,-1] 
-	
-
+ 
 
 
 
