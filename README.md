@@ -4,6 +4,11 @@ Table of content:
 * General info
 * Instructions given by lectors
 * Walkthrough script with explanations what, how and why were things done
+	* Merging
+	* Mean and std
+	* Activities
+	* Labeling
+	* Tidy dataset
 
 
 ## General info
